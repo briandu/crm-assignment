@@ -55,14 +55,37 @@ class CRM
 
   end
 
-  def modify_existing_contact
 
+
+  def modify_existing_contact
+    puts "Enter the contact's ID: "
+      userid = gets.to_i
+
+    print_modify_menu
+      user_selected = gets.to_i
+
+    case user_selected
+      when 1 then
+        attribute = "first_name"
+      when 2 then
+        attribute = "last_name"
+      when 3 then
+        attribute = "email"
+      when 4 then
+        attribute = "note"
+    end
+
+    puts "What would you like it to change to?"
+      user_modify = gets.chomp
+
+    Contact.find(userid).update(attribute,user_modify)
   end
 
 
   def delete_contact
-    print "Enter the contact's ID: "
-    Contact.delete
+    puts "Enter the contact's ID: "
+    userid = gets.to_i
+    Contact.delete(userid)
   end
 
   def display_all_contacts
@@ -73,10 +96,14 @@ class CRM
 
   end
 
-  def search_by_attribute
-    print_search_menu
-    user_selected = gets.to_i
-    search_options(user_selected)
+  def print_modify_menu
+    puts "What attribute would you like to change?"
+    puts "[1] First Name"
+    puts "[2] Last Name"
+    puts "[3] Email"
+    puts "[4] Note"
+
+    puts "Enter a number: "
   end
 
   def print_search_menu
@@ -88,6 +115,7 @@ class CRM
 
     puts "Enter a number: "
   end
+
 
   def search_options(user_selected)
     case user_selected
@@ -101,7 +129,7 @@ class CRM
         attribute = "note"
     end
 
-    puts "What do you want to search"
+    puts "Enter it now: "
       user_input = gets.chomp
       match_found = Contact.find_by(attribute, user_input)
         puts "ID: #{match_found.id} | Name: #{match_found.first_name} #{match_found.last_name} | Email: #{match_found.email} | Note: #{match_found.note}"

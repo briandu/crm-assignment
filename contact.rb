@@ -35,16 +35,30 @@ class Contact
 
   # This method should accept an id as an argument
   # and return the contact who has that id
-  def self.find
-
+  def self.find(userid)
+     @@contacts.each do |contact|
+       if contact.id == userid
+         return contact
+       end
+     end
+     false
   end
-
+  
   # This method should allow you to specify
   # 1. which of the contact's attributes you want to update
   # 2. the new value for that attribute
   # and then make the appropriate change to the contact
-  def update
-
+  def update(attribute, user_modify)
+    case attribute
+    when "first_name"
+      self.first_name = user_modify
+      when "last_name"
+      self.last_name = user_modify
+      when "email"
+      self.email = user_modify
+      when "note"
+      self.note = user_modify
+    end
   end
 
   # This method should work similarly to the find method above
@@ -91,9 +105,10 @@ class Contact
 
   # This method should delete the contact
   # HINT: Check the Array class docs for built-in methods that might be useful here
-  def self.delete
-    user_input_id.to_i = gets
-    @@contact.delete_if { |arrid| arrid == user_input_id}
+  def self.delete(userid)
+    @@contacts.delete_if{ |contact| contact.id == userid}
+    # user_input_id.to_i = gets
+    # @@contact.reject! { |arrid| arrid = user_input_id}
   end
 
   # Feel free to add other methods here, if you need them.
