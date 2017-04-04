@@ -1,6 +1,6 @@
 class Contact
 
-  attr_read: id
+  attr_reader :id
   attr_accessor :first_name, :last_name, :email, :note
 
   @@contacts = []
@@ -18,13 +18,18 @@ class Contact
   # This method should call the initializer,
   # store the newly created contact, and then return it
   def self.create(first_name, last_name, email, note)
-    new_contact = contact.new(first_name, last_name, email, note)
-    @@contacts << new_contact
+    new_contact = Contact.new(first_name, last_name, email, note)
+    @@contacts.push(new_contact)
     return new_contact
   end
 
   # This method should return all of the existing contacts
   def self.all
+    @@contacts
+  end
+
+  def self.contact_organize
+    @first_name
 
   end
 
@@ -46,23 +51,49 @@ class Contact
   # but it should allow you to search for a contact using attributes other than id
   # by specifying both the name of the attribute and the value
   # eg. searching for 'first_name', 'Betty' should return the first contact named Betty
-  def self.find_by
+  def self.find_by(attribute, user_input)
+    case attribute
+      when "first_name"
+        @@contacts.each do |contact|
+          if contact.first_name == user_input
+            return contact
+          end
+        end
+      when "last_name"
+        @@contacts.each do |contact|
+          if contact.last_name == user_input
+            return contact
+          end
+        end
+      when "email"
+        @@contacts.each do |contact|
+          if contact.email == user_input
+            return contact
+          end
+        end
+      when "note"
+        @@contacts.each do |contact|
+          if contact.note == user_input
+            return contact
+          end
+        end
+      end
+    end
 
-  end
-
-  # This method should delete all of the contacts
+  # # This method should delete all of the contacts
   def self.delete_all
-
+    @@contacts.clear
   end
 
-  def full_name
-
-  end
+  # def full_name
+  #
+  # end
 
   # This method should delete the contact
   # HINT: Check the Array class docs for built-in methods that might be useful here
-  def delete
-
+  def self.delete
+    user_input_id.to_i = gets
+    @@contact.delete_if { |arrid| arrid == user_input_id}
   end
 
   # Feel free to add other methods here, if you need them.
